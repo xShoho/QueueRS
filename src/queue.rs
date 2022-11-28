@@ -1,4 +1,4 @@
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 struct Element<T> {
     data: T,
     next: Option<Box<Element<T>>>,
@@ -7,7 +7,7 @@ struct Element<T> {
 impl<T: Clone> Element<T> {
     fn new(data: T) -> Self {
         Element {
-            data: data,
+            data,
             next: None,
         }
     }
@@ -17,7 +17,6 @@ impl<T: Clone> Element<T> {
 pub struct Queue<T> {
     size: i64,
     beggining: Option<Box<Element<T>>>,
-    end: Option<Box<Element<T>>>,
 }
 
 impl<T: Clone> Queue<T> {
@@ -25,7 +24,6 @@ impl<T: Clone> Queue<T> {
         Queue {
             size: 0,
             beggining: None,
-            end: None,
         }
     }
 
@@ -34,32 +32,32 @@ impl<T: Clone> Queue<T> {
     }
 
     pub fn add(&mut self, data: T) {
-        let new_element: Element<T> = Element::new(data);
+        let new_element = Some(Box::new(Element::new(data)));
 
-        if self.beggining.is_none() {
-            self.beggining = Some(Box::new(new_element.clone()));
-        } else {
-            let mut end: Box<Element<T>> = self.end.clone().unwrap();
-            end.next = Some(Box::new(new_element.clone()));
+        let mut current = match self.beggining.as_mut() {
+            Some(element) => element,
+            None => {
+                self.beggining = new_element;
+                return;
+            }
         };
 
-        self.end = Some(Box::new(new_element));
+        while current.next.is_some() {
+            current = current.next.as_mut().unwrap();
+        }
+
+        current.next = new_element;
     }
 
     pub fn remove(&mut self) -> T {
-        if self.beggining.is_none() {
-            panic!("Expected begin value");
-        }
+        let data = self.beggining.as_mut().unwrap().data.clone();
 
-        let data: T = self.beggining.as_mut().unwrap().data.clone();
-
-        let new_beggining: Option<Box<Element<T>>> = self.beggining.as_mut().unwrap().next.clone();
+        let new_beggining = match self.beggining.as_mut() {
+            Some(element) => element.next.take(),
+            None => None,
+        };
 
         self.beggining = new_beggining;
-
-        if self.beggining.is_none() {
-            self.end = None;
-        }
 
         data
     }
