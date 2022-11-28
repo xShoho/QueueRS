@@ -1,4 +1,4 @@
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone)]
 struct Element<T> {
     data: T,
     next: Option<Box<Element<T>>>,
@@ -6,10 +6,7 @@ struct Element<T> {
 
 impl<T: Clone> Element<T> {
     fn new(data: T) -> Self {
-        Element {
-            data,
-            next: None,
-        }
+        Element { data, next: None }
     }
 }
 
@@ -47,6 +44,7 @@ impl<T: Clone> Queue<T> {
         }
 
         current.next = new_element;
+        self.size += 1;
     }
 
     pub fn remove(&mut self) -> T {
@@ -58,6 +56,7 @@ impl<T: Clone> Queue<T> {
         };
 
         self.beggining = new_beggining;
+        self.size -= 1;
 
         data
     }

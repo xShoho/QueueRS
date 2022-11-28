@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone)]
 pub struct Person<'a> {
     id: i64,
     name: &'a str,
@@ -9,11 +9,7 @@ pub struct Person<'a> {
 
 impl<'a> Person<'a> {
     pub fn new(id: i64, name: &'a str, surname: &'a str) -> Self {
-        Person {
-            id,
-            name,
-            surname,
-        }
+        Person { id, name, surname }
     }
 }
 
