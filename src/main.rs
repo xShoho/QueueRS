@@ -48,8 +48,8 @@ fn main() {
             let id1: usize = random_usize(6);
             let id2: usize = random_usize(6);
             let person: Person = Person::new(i, names[id1], surnames[id2]);
-            queue.add(person.clone());
             println!("Wejście klienta {}", person);
+            queue.add(person);
             i += 1;
         } else {
             let data: Person = queue.remove();
@@ -71,5 +71,5 @@ fn random_usize(num: usize) -> usize {
 
     let number: usize = rng.gen_range(0..num);
 
-    return number;
+    number
 }
