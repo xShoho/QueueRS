@@ -2,12 +2,16 @@
 pub struct Person<'a> {
     id: i64,
     name: &'a str,
-    surname: &'a str
+    surname: &'a str,
 }
 
 impl<'a> Person<'a> {
     pub fn new(id: i64, name: &'a str, surname: &'a str) -> Self {
-        Person { id: id, name: name, surname: surname }
+        Person {
+            id: id,
+            name: name,
+            surname: surname,
+        }
     }
 
     pub fn toString(&mut self) -> String {

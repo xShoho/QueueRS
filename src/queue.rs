@@ -1,12 +1,15 @@
 #[derive(Debug, Clone)]
 struct Element<T> {
     data: T,
-    next: Option<Box<Element<T>>>
+    next: Option<Box<Element<T>>>,
 }
 
 impl<T: Clone> Element<T> {
     fn new(data: T) -> Self {
-        Element { data: data, next: None }
+        Element {
+            data: data,
+            next: None,
+        }
     }
 }
 
@@ -14,41 +17,45 @@ impl<T: Clone> Element<T> {
 pub struct Queue<T> {
     size: i64,
     beggining: Option<Box<Element<T>>>,
-    end: Option<Box<Element<T>>>
+    end: Option<Box<Element<T>>>,
 }
 
 impl<T: Clone> Queue<T> {
     pub fn new() -> Self {
-        Queue { size: 0, beggining: None, end: None }
+        Queue {
+            size: 0,
+            beggining: None,
+            end: None,
+        }
     }
 
-    pub fn Size(&mut self) -> i64 {
+    pub fn size(&mut self) -> i64 {
         self.size
     }
 
-    pub fn Add(&mut self, data: T) {
-        let newElement: Element<T> = Element::new(data);
+    pub fn add(&mut self, data: T) {
+        let new_element: Element<T> = Element::new(data);
 
         if self.beggining.is_none() {
-            self.beggining = Some(Box::new(newElement.clone()));
+            self.beggining = Some(Box::new(new_element.clone()));
         } else {
-            let end: &mut Box<Element<T>> = self.end.as_mut().unwrap();
-            end.next = Some(Box::new(newElement.clone()));
-        }
+            let mut end: Box<Element<T>> = self.end.clone().unwrap();
+            end.next = Some(Box::new(new_element.clone()));
+        };
 
-        self.end = Some(Box::new(newElement));
+        self.end = Some(Box::new(new_element));
     }
 
-    pub fn Remove(&mut self) -> T {
-        if self.beggining.is_none(){
+    pub fn remove(&mut self) -> T {
+        if self.beggining.is_none() {
             panic!("Expected begin value");
         }
 
         let data: T = self.beggining.as_mut().unwrap().data.clone();
 
-        let newBeggining: Option<Box<Element<T>>> = self.beggining.as_mut().unwrap().next.clone();
+        let new_beggining: Option<Box<Element<T>>> = self.beggining.as_mut().unwrap().next.clone();
 
-        self.beggining = newBeggining;
+        self.beggining = new_beggining;
 
         if self.beggining.is_none() {
             self.end = None;
@@ -57,7 +64,7 @@ impl<T: Clone> Queue<T> {
         data
     }
 
-    pub fn isEmpty(&mut self) -> bool {
+    pub fn is_empty(&mut self) -> bool {
         if self.beggining.is_none() {
             return true;
         }
