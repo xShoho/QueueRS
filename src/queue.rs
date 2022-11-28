@@ -19,7 +19,7 @@ pub struct Queue<T> {
     beggining: Option<Box<Element<T>>>,
 }
 
-impl<T: Clone + PartialEq> Queue<T> {
+impl<T: Clone> Queue<T> {
     pub fn new() -> Self {
         Queue {
             size: 0,
