@@ -47,13 +47,13 @@ fn main() {
         if random(101) > p {
             let id1: usize = random_usize(6);
             let id2: usize = random_usize(6);
-            let mut person: Person = Person::new(i, names[id1], surnames[id2]);
+            let person: Person = Person::new(i, names[id1], surnames[id2]);
             queue.add(person.clone());
-            println!("Wejście klienta {}", person.to_string());
+            println!("Wejście klienta {}", person);
             i += 1;
         } else {
-            let mut data: Person = queue.remove();
-            println!("Wyjście klienta {}", data.to_string());
+            let data: Person = queue.remove();
+            println!("Wyjście klienta {}", data);
         }
     }
 
