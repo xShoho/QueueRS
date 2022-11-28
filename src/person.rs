@@ -14,7 +14,7 @@ impl<'a> Person<'a> {
         }
     }
 
-    pub fn toString(&mut self) -> String {
+    pub fn to_string(&mut self) -> String {
         let string: String = format!("{}: {} {}", self.id, self.name, self.surname);
 
         string

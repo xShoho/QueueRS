@@ -41,7 +41,7 @@ fn main() {
         queue.add(person);
     }
 
-    let mut i: i64 = 11;
+    let mut i: i64 = 10;
 
     while !queue.is_empty() {
         if random(101) > p {
@@ -49,11 +49,11 @@ fn main() {
             let id2: usize = random_usize(6);
             let mut person: Person = Person::new(i, names[id1], surnames[id2]);
             queue.add(person.clone());
-            println!("Wejście klienta {}", person.toString());
+            println!("Wejście klienta {}", person.to_string());
             i += 1;
         } else {
             let mut data: Person = queue.remove();
-            println!("Wyjście klienta {}", data.toString());
+            println!("Wyjście klienta {}", data.to_string());
         }
     }
 
